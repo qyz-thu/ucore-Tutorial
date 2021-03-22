@@ -1,6 +1,6 @@
 import os
 
-TARGET_DIR = "../user/target/"
+TARGET_DIR = "../user/target/bin/"
 
 if __name__ == '__main__':
     f = open("kernel_app.ld", mode="w")

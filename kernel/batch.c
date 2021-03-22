@@ -5,13 +5,13 @@
 static int app_cur, app_num;
 static uint64* app_info_ptr;
 extern char _app_num[], ekernel[];
-const uint64 BASE_ADDRESS = 0x80400000, MAX_APP_SIZE = 0x20000;
 int fin = 0;
 
 int finished() {
     ++fin;
     if(fin >= app_num)
         panic("all apps over\n");
+
     return 0;
 }
 
@@ -36,7 +36,7 @@ int run_all_app() {
     for(int i = 0; i < app_num; ++i) {
         struct proc* p = allocproc();
         struct trapframe* trapframe = p->trapframe;
-        printf("run app %d\n", i);
+        // printf("run app %d\n", i);
         load_app(i, app_info_ptr);
         uint64 entry = BASE_ADDRESS + i*MAX_APP_SIZE;
         trapframe->epc = entry;

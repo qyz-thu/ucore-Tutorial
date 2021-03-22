@@ -58,7 +58,14 @@ struct proc* allocproc();
 uint64 get_cycle();
 void timerinit();
 void set_next_timer();
+uint64 get_time_ms();
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
 #define PAGE_SIZE (4096)
+
+// const uint64 BASE_ADDRESS = 0x80400000, MAX_APP_SIZE = 0x20000;
+#define BASE_ADDRESS (0x80400000)
+#define MAX_APP_SIZE (0x20000)
+
+#define BIGSTRIDE (10000)
