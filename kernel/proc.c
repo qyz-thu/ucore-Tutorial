@@ -47,6 +47,7 @@ struct proc* allocproc(void)
 found:
     p->pid = allocpid();
     p->state = USED;
+    p->priority = 16;
     memset(&p->context, 0, sizeof(p->context));
     memset((void*)p->kstack, 0, KSTACK_SIZE);
     p->context.ra = (uint64)usertrapret;
@@ -64,7 +65,7 @@ scheduler(void)
             if(p->state == RUNNABLE) {
                 p->state = RUNNING;
                 current_proc = p;
-                printf("switch to next proc\n");
+                // printf("switch to next proc\n");
                 swtch(&idle.context, &p->context);
             }
         }
@@ -96,7 +97,7 @@ void yield(void)
 
 void exit(int code) {
     struct proc *p = curr_proc();
-    printf("proc %d exit with %d\n", p->pid, code);
+    // printf("proc %d exit with %d\n", p->pid, code);
     p->state = UNUSED;
     finished();
     sched();

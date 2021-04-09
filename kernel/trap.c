@@ -47,7 +47,7 @@ void usertrap() {
         cause &= ~(1ULL << 63);
         switch(cause) {
         case SupervisorTimer:
-            printf("time interrupt!\n");
+            // ("time interrupt!\n");
             set_next_timer();
             yield();
             break;
@@ -107,7 +107,7 @@ void usertrapret() {
 
     // tell trampoline.S the user page table to switch to.
     uint64 satp = MAKE_SATP(curr_proc()->pagetable);
-    printf("return to user\n");
+    // printf("return to user\n");
     uint64 fn = TRAMPOLINE + (userret - trampoline);
     ((void (*)(uint64,uint64))fn)(TRAPFRAME, satp);
 }

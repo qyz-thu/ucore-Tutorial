@@ -7,7 +7,7 @@
 static int app_cur, app_num;
 static uint64 *app_info_ptr;
 extern char _app_num[];
-
+const uint64 BASE_ADDRESS = 0x1000;
 int fin = 0;
 
 int finished() {
@@ -32,14 +32,18 @@ pagetable_t bin_loader(uint64 start, uint64 end, struct proc *p) {
         panic("mappages fail\n");
     }
     uint64 s = PGROUNDDOWN(start), e = PGROUNDUP(end);
-    if (mappages(pg, s, e, s, PTE_U | PTE_R | PTE_W | PTE_X) != 0) {
+    if (mappages(pg, BASE_ADDRESS, e - s, s, PTE_U | PTE_R | PTE_W | PTE_X) != 0) {
         panic("wrong loader 1\n");
     }
     p->pagetable = pg;
-    p->trapframe->epc = start;
-    mappages(pg, 0, USTACK_SIZE, (uint64) kalloc(), PTE_U | PTE_R | PTE_W | PTE_X);
-    p->ustack = 0;
+    p->trapframe->epc = BASE_ADDRESS;
+    mappages(pg, USTACK_BOTTOM, USTACK_SIZE, (uint64) kalloc(), PTE_U | PTE_R | PTE_W | PTE_X);
+    p->ustack = USTACK_BOTTOM;
     p->trapframe->sp = p->ustack + USTACK_SIZE;
+    p->size = e - s;
+    if(p->trapframe->sp > BASE_ADDRESS) {
+        panic("error memory_layout");
+    }
     return pg;
 }
 
@@ -48,7 +52,7 @@ int run_all_app() {
         app_cur++;
         app_info_ptr++;
         struct proc *p = allocproc();
-        printf("load app %d\n", app_cur);
+        // printf("load app %d\n", app_cur);
         bin_loader(app_info_ptr[0], app_info_ptr[1], p);
         p->state = RUNNABLE;
     }

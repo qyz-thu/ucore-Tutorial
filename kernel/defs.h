@@ -80,6 +80,7 @@ int copyinstr(pagetable_t, char *, uint64, uint64);
 uint64 get_cycle();
 void timerinit();
 void set_next_timer();
+uint64 get_time_ms();
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))

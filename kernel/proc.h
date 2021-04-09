@@ -36,4 +36,12 @@ struct proc {
     uint64 kstack;               // Virtual address of kernel stack
     struct trapframe *trapframe; // data page for trampoline.S
     struct context context;      // swtch() here to run process
+    int priority;                // priority
+    int size;                    // size of memory used
+};
+
+struct TimeVal
+{
+    uint64 sec;
+    uint64 usec;
 };

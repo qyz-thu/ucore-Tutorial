@@ -27,7 +27,7 @@ void kvminit(void) {
     kernel_pagetable = kvmmake();
     w_satp(MAKE_SATP(kernel_pagetable));
     sfence_vma();
-    printf("enable pageing at %p\n", r_satp());
+    // printf("enable pageing at %p\n", r_satp());
 }
 
 // Return the address of the PTE in page table pagetable
