@@ -20,6 +20,6 @@ void main() {
     batchinit();
     timerinit();
     run_all_app();
-    info("start scheduler!\n");
+    // info("start scheduler!\n");
     scheduler();
 }

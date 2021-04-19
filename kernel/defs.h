@@ -87,6 +87,11 @@ void timerinit();
 void set_next_timer();
 uint64 get_time_ms();
 
+// proc.c
+void
+proc_freepagetable(pagetable_t, uint64);
+pagetable_t proc_pagetable(struct proc*);
+
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
 

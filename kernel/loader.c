@@ -52,7 +52,7 @@ void alloc_ustack(struct proc *p) {
 }
 
 void bin_loader(uint64 start, uint64 end, struct proc *p) {
-    info("load range = [%p, %p)\n", start, end);
+    // info("load range = [%p, %p)\n", start, end);
     uint64 s = PGROUNDDOWN(start), e = PGROUNDUP(end), length = e - s;
     for(uint64 va = BASE_ADDRESS, pa = s; pa < e; va += PGSIZE, pa += PGSIZE) {
         void* page = kalloc();
@@ -70,14 +70,14 @@ void bin_loader(uint64 start, uint64 end, struct proc *p) {
 }
 
 void loader(int id, void* p) {
-    info("loader %s\n", names[id]);
+    // info("loader %s\n", names[id]);
     bin_loader(app_info_ptr[id], app_info_ptr[id+1], p);
 }
 
 int run_all_app() {
     struct proc *p = allocproc();
     p->parent = 0;
-    int id = get_id_by_name("user_shell");
+    int id = get_id_by_name("ch5_usershell");
     if(id < 0)
         panic("no user shell");
     loader(id, p);

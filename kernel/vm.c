@@ -27,7 +27,7 @@ void kvminit(void) {
     kernel_pagetable = kvmmake();
     w_satp(MAKE_SATP(kernel_pagetable));
     sfence_vma();
-    printf("enable pageing at %p\n", r_satp());
+    // printf("enable pageing at %p\n", r_satp());
 }
 
 // Return the address of the PTE in page table pagetable
@@ -207,7 +207,7 @@ void debugwalk(pagetable_t pagetable, int depth) {
     for (int i = 0; i < 512; i++) {
         pte_t pte = pagetable[i];
         if(pte != 0)
-            info("{%d} pg[%d] = %p\n", depth, i, pte);
+            // info("{%d} pg[%d] = %p\n", depth, i, pte);
         if ((pte & PTE_V) && (pte & (PTE_R | PTE_W | PTE_X)) == 0) {
             // this PTE points to a lower-level page table.
             uint64 child = PTE2PA(pte);

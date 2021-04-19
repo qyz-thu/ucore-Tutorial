@@ -37,4 +37,11 @@ struct proc {
     uint64 sz;
     struct proc *parent;         // Parent process
     uint64 exit_code;
+    int priority;
+};
+
+struct TimeVal
+{
+    uint64 sec;
+    uint64 usec;
 };

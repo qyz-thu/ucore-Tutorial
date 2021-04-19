@@ -235,7 +235,7 @@ wait(int pid, int* code)
 void exit(int code) {
     struct proc *p = curr_proc();
     p->exit_code = code;
-    info("proc %d exit with %d\n", p->pid, code);
+    // info("proc %d exit with %d\n", p->pid, code);
     freeproc(p);
     if(p->parent != 0) {
         trace("wait for parent to clean\n");
