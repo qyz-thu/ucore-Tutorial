@@ -7,7 +7,7 @@
 extern char trampoline[], uservec[], userret[];
 
 void trapinit() {
-    intr_on();
+    // intr_on(); // DO NOT enable interrupt unless you have handled kernel trap
     set_kerneltrap();
 }
 
@@ -47,7 +47,7 @@ void usertrap() {
         cause &= ~(1ULL << 63);
         switch(cause) {
         case SupervisorTimer:
-            info("time interrupt!\n");
+            trace("time interrupt!\n");
             set_next_timer();
             yield();
             break;
